@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 public class AddressBook {
 
-    public static void main(String[] ar) throws IOException {
+    public static void main(String[] args) throws IOException {
         Scanner sc=new Scanner(System.in);
-        System.out.println("Select option from below :");
-        System.out.println("1. Add New Contact."+"\n"+"2. Read All Contacts.");
+        System.out.println("Select the following Operation");
+        System.out.println("1. Add New Contact"+"\n"+"2. Read All Contacts");
         int option=sc.nextInt();
         switch (option)
         {
@@ -16,7 +16,7 @@ public class AddressBook {
                 break;
             case 2: FileOperation.readFile();
                 break;
-            default: System.out.println("Invalid Choice");
+            default: System.out.println("Invalid Choice Option Selected");
         }
     }
 }

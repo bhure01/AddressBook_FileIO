@@ -1,49 +1,51 @@
 package com.bridgelabz;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
+
 public class FileOperation {
+    public static final String FILE_PATH= "contact.csv";
     public static void writeFile() {
         try {
-            FileWriter myFile = new FileWriter("contact.txt");
-            Scanner sc= new Scanner(System.in);
+            Scanner sc = new Scanner(System.in);
             System.out.println("Enter First Name");
-            String firstName=sc.nextLine();
+            String firstName = sc.nextLine();
             System.out.println("Enter Last Name");
-            String lastName=sc.nextLine();
+            String lastName = sc.nextLine();
             System.out.println("Enter Address");
-            String address=sc.nextLine();
+            String address = sc.nextLine();
             System.out.println("Enter City");
-            String city=sc.nextLine();
+            String city = sc.nextLine();
             System.out.println("Enter State");
-            String state=sc.nextLine();
-            System.out.println("Enter Phone Number");
-            String phn=sc.nextLine();
-            System.out.println("Enter Email");
-            String email=sc.nextLine();
-            myFile.write(""+firstName+"|"+lastName+"|"+address+"|"+city+"|"+state+"|"+phn+"|"+email);
-            System.out.println("AddressBook Written successfully");
-            myFile.close();
+            String state = sc.nextLine();
+            System.out.println("Enter Phone");
+            String phone = sc.nextLine();
+            System.out.println("Enter Email.");
+            String email = sc.nextLine();
+            FileWriter file = new FileWriter(FILE_PATH);
+            CSVWriter cw = new CSVWriter(file);
+            String[] data = {firstName, lastName, address, city, state, phone, email};
+            cw.writeNext(data);
+            System.out.println("AddressBook Written Successfully");
+            file.close();
         }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
+        catch (Exception e){}
     }
-
-    public static void readFile() {
-        File myFile= new File("contact.txt");
+    public static <CSVReader> void readFile() {
         try {
-            String value;
-            BufferedReader bf = new BufferedReader(new FileReader(myFile));
-            while((value=bf.readLine())!=null)
+            Reader rd = Files.newBufferedReader(Paths.get(FILE_PATH));
+            CSVReader csvrd= new CSVReader(rd)  ;
+            String[] info;
+            while((info=csvrd.readNext())!=null)
             {
-                String[] info=value.split("|");
                 System.out.println("First Name: "+info[0]);
                 System.out.println("Last Name: "+info[1]);
                 System.out.println("Address: "+info[2]);
@@ -53,10 +55,8 @@ public class FileOperation {
                 System.out.println("Phone: "+info[5]);
                 System.out.println("*****************************");
             }
-        }
-        catch (Exception e)
-        {
-
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
